@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Escola Francisco de Sá Cavalcante · Ensino Médio Integral</title>
+<style>
+:root{
+  --bg:#fff8ef; --card:#ffffff; --ink:#1d1b3a; --muted:#5b5877;
+  --c1:#ff4d6d; --c2:#ffb703; --c3:#3a86ff; --c4:#06d6a0; --c5:#8338ec;
+  --shadow:0 10px 30px rgba(29,27,58,.14);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#15132b;--card:#221f45;--ink:#fff6e8;--muted:#b9b5d8;--shadow:0 10px 30px rgba(0,0,0,.45)}
+}
+:root[data-theme="dark"]{--bg:#15132b;--card:#221f45;--ink:#fff6e8;--muted:#b9b5d8;--shadow:0 10px 30px rgba(0,0,0,.45)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;overflow-x:hidden;min-height:100%}
+h1,h2,h3{font-family:"Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;margin:0}
+
+/* fundo animado */
+.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;animation:float 14s ease-in-out infinite}
+.blob:nth-child(1){width:340px;height:340px;background:var(--c1);top:-80px;left:-80px}
+.blob:nth-child(2){width:300px;height:300px;background:var(--c3);top:30%;right:-90px;animation-delay:-4s}
+.blob:nth-child(3){width:280px;height:280px;background:var(--c2);bottom:-80px;left:25%;animation-delay:-8s}
+@keyframes float{50%{transform:translate(40px,-50px) scale(1.15)}}
+
+/* navegação */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 18px;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:10px;}
+.logo{width:46px;height:46px;object-fit:contain;background:transparent;filter:drop-shadow(0 4px 10px rgba(0,0,0,.1));mix-blend-mode:multiply}
+:root[data-theme="dark"] .logo, @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .logo{ mix-blend-mode:normal; } }
+.logo-fallback{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.5rem;background:linear-gradient(135deg,var(--c1),var(--c5));box-shadow:var(--shadow)}
+nav{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+nav button{border:0;cursor:pointer;font:inherit;font-weight:800;padding:10px 18px;border-radius:999px;background:var(--card);color:var(--ink);box-shadow:var(--shadow);transition:transform .2s,background .2s}
+nav button:hover{transform:translateY(-3px) rotate(-2deg)}
+nav button.active{background:linear-gradient(135deg,var(--c1),var(--c5));color:#fff}
+
+main{position:relative;z-index:1;max-width:1050px;margin:0 auto;padding:20px 18px 60px}
+.page{display:none}
+.page.show{display:block;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.97)}}
+
+/* hero & logo flutuante sem fundo */
+.hero{text-align:center;padding:30px 0 10px;display:flex;flex-direction:column;align-items:center}
+.hero-logo-wrapper{margin-bottom:14px;animation:floatLogo 4s ease-in-out infinite}
+.hero-logo{width:120px;height:120px;object-fit:contain;background:transparent;padding:0;filter:drop-shadow(0 15px 25px rgba(29,27,58,.25));mix-blend-mode:multiply;transition:transform .3s}
+.hero-logo:hover{transform:scale(1.1) rotate(4deg)}
+@keyframes floatLogo{0%,100%{transform:translateY(0px)}50%{transform:translateY(-12px)}}
+
+.tag{display:inline-block;background:var(--c2);color:#1d1b3a;font-weight:800;padding:6px 16px;border-radius:999px;transform:rotate(-2deg)}
+.hero h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.05;margin:16px 0}
+.grad{background:linear-gradient(90deg,var(--c1),var(--c2),var(--c4),var(--c3),var(--c5),var(--c1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:300% 0}}
+.hero p{max-width:620px;margin:0 auto 18px;color:var(--muted);font-size:1.1rem}
+.cta{border:0;cursor:pointer;font:inherit;font-weight:800;font-size:1.05rem;color:#fff;padding:14px 28px;border-radius:999px;background:linear-gradient(135deg,var(--c1),var(--c5));box-shadow:0 8px 0 #5a2aa8,var(--shadow);transition:.15s}
+.cta:active{transform:translateY(6px);box-shadow:0 2px 0 #5a2aa8}
+
+/* IDEB */
+.ideb{margin:34px 0;padding:30px 20px;border-radius:28px;text-align:center;color:#fff;background:linear-gradient(135deg,var(--c5),var(--c3) 55%,var(--c4));box-shadow:var(--shadow);position:relative;overflow:hidden}
+.ideb::after{content:"🏆";position:absolute;right:-10px;bottom:-30px;font-size:9rem;opacity:.18;transform:rotate(-15deg)}
+.ideb small{font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.ideb .num{font-size:clamp(4rem,16vw,7.5rem);font-weight:900;line-height:1;margin:6px 0;text-shadow:0 6px 0 rgba(0,0,0,.18)}
+.ideb strong{font-size:1.2rem}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:var(--card);border-radius:24px;padding:22px;box-shadow:var(--shadow);transition:transform .25s;border-top:6px solid var(--accent,var(--c1))}
+.card:hover{transform:translateY(-8px) rotate(-1deg)}
+.card .ico{font-size:2.6rem;display:inline-block;animation:bounce 2.4s ease-in-out infinite}
+.card h3{margin:8px 0;font-size:1.2rem}
+.card p{margin:0;color:var(--muted)}
+@keyframes bounce{50%{transform:translateY(-8px) rotate(6deg)}}
+.title{font-size:clamp(1.6rem,4vw,2.3rem);margin:40px 0 16px;text-align:center}
+
+/* técnico */
+.tech{margin-top:34px;padding:26px;border-radius:28px;background:var(--card);box-shadow:var(--shadow);display:grid;gap:14px;border-left:10px solid var(--c4)}
+.code{font-family:Consolas,monospace;background:#1d1b3a;color:#06d6a0;padding:14px 16px;border-radius:14px;overflow-x:auto;font-size:.95rem}
+.code i{color:#ffb703;font-style:normal}
+
+/* olimpíadas */
+.medals-total{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:22px 0}
+.pill{background:var(--card);box-shadow:var(--shadow);border-radius:20px;padding:12px 22px;text-align:center;font-weight:800;cursor:pointer;transition:transform .2s}
+.pill:hover{transform:scale(1.1) rotate(-3deg)}
+.pill span{display:block;font-size:2rem}
+.medal{text-align:center;perspective:700px}
+.medal .disc{width:92px;height:92px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;font-size:2.6rem;background:radial-gradient(circle at 30% 30%,#fff7,transparent 40%),var(--m);box-shadow:inset 0 -6px 0 rgba(0,0,0,.15),0 8px 18px rgba(0,0,0,.25);transition:transform .6s}
+.medal:hover .disc{transform:rotateY(360deg)}
+.note{margin-top:30px;text-align:center;color:var(--muted);font-size:.9rem}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+footer{position:relative;z-index:1;text-align:center;padding:24px;color:var(--muted)}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+/* coruja sábia */
+#owl{position:fixed;left:0;top:0;width:64px;height:72px;z-index:40;pointer-events:none;transition:transform 1.1s cubic-bezier(.45,.05,.25,1);will-change:transform}
+#owl .in{width:100%;height:100%;animation:owlBob 2.8s ease-in-out infinite}
+#owl svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 8px rgba(0,0,0,.28))}
+#owl .lid{transform-box:fill-box;transform-origin:center top;animation:blink 4.5s infinite}
+#owl .wl,#owl .wr{transform-box:fill-box;transition:transform .2s}
+#owl .wl{transform-origin:right top}
+#owl .wr{transform-origin:left top}
+#owl.fly .wl{animation:flapL .22s ease-in-out infinite}
+#owl.fly .wr{animation:flapR .22s ease-in-out infinite}
+#owl.tilt svg{transform:rotate(-12deg);transform-origin:50% 90%}
+#owl.cheer .in{animation:cheer .6s ease-out}
+#owl .bub{position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%) scale(.6);transform-origin:50% 100%;opacity:0;white-space:nowrap;background:var(--card);color:var(--ink);font-weight:800;font-size:.85rem;padding:8px 14px;border-radius:16px;box-shadow:var(--shadow);transition:opacity .25s,transform .25s}
+#owl .bub::after{content:"";position:absolute;left:50%;top:100%;margin-left:-6px;border:6px solid transparent;border-top-color:var(--card)}
+#owl .bub.on{opacity:1;transform:translateX(-50%) scale(1)}
+#owl.low .bub{bottom:auto;top:calc(100% + 6px)}
+#owl.low .bub::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--card)}
+@keyframes owlBob{50%{transform:translateY(-4px)}}
+@keyframes blink{0%,93%,100%{transform:scaleY(0)}96%{transform:scaleY(1)}}
+@keyframes flapL{50%{transform:rotate(38deg)}}
+@keyframes flapR{50%{transform:rotate(-38deg)}}
+@keyframes cheer{40%{transform:translateY(-16px) rotate(-8deg)}70%{transform:translateY(-4px) rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="blobs"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+<canvas id="fx"></canvas>
+
+<header>
+  <div class="brand" id="brand"></div>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<footer>Escola Francisco de Sá Cavalcante · Paulista, Paraíba 💜</footer>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO — edite aqui os dados da escola
+   ========================================================= */
+const SCHOOL = {
+  nome: "Escola Francisco de Sá Cavalcante",
+  cidade: "Paulista – PB, Sertão Paraibano",
+  logo: "https://drive.google.com/thumbnail?id=1mA0XZVAMqOxIIYAz_0VfvPRLFlvwOYK-&sz=w300",
+  ideb: 5.4,
+  idebAno: "2023"
+};
+
+const PREMIACOES = [
+  { tipo:"ouro",   titulo:"Medalha de Ouro",   evento:"OBMEP",    ano:"2024", aluno:"Nome do(a) aluno(a)" },
+  { tipo:"prata",  titulo:"Medalha de Prata",  evento:"OBMEP",    ano:"2024", aluno:"Nome do(a) aluno(a)" },
+  { tipo:"bronze", titulo:"Medalha de Bronze", evento:"OBA – Astronomia", ano:"2023", aluno:"Nome do(a) aluno(a)" },
+  { tipo:"mencao", titulo:"Menção Honrosa",     evento:"Olimpíada de Língua Portuguesa", ano:"2023", aluno:"Nome do(a) aluno(a)" }
+];
+const MEDAL_STYLE = {
+  ouro:["🥇","#ffb703"], prata:["🥈","#b8c1cc"], bronze:["🥉","#cd7f32"], mencao:["🎖️","#8338ec"]
+};
+
+const SECTIONS = [
+  { id:"inicio", label:"🏠 Início", render: renderInicio },
+  { id:"olimpiadas", label:"🏅 Olimpíadas", render: renderOlimpiadas }
+];
+
+/* ---------- Início ---------- */
+function renderInicio(){
+  const feats = [
+    ["⏰","Tempo integral","Um dia inteiro para aprender, criar, praticar e fazer amizades.","--c1"],
+    ["💻","Técnico em Informática","Você sai do 3º ano com o curso técnico já no currículo.","--c3"],
+    ["🧪","Aprendizado na prática","Projetos, desafios e olimpíadas que fazem a matéria ganhar sentido.","--c4"],
+    ["🤝","Escola que acolhe","Professores presentes e uma turma que torce por você.","--c5"]
+  ].map(([i,t,d,c])=>`<div class="card rv" style="--accent:var(${c})"><span class="ico">${i}</span><h3>${t}</h3><p>${d}</p></div>`).join("");
+
+  return `
+  <section class="hero">
+    <div class="hero-logo-wrapper">
+      <img class="hero-logo" src="${SCHOOL.logo}" alt="Logo ${SCHOOL.nome}" id="heroLogoImg">
+    </div>
+    <span class="tag">🎓 Ensino Médio Integral · Paulista-PB</span>
+    <h1>Seu futuro começa <span class="grad">aqui!</span></h1>
+    <p>Aluno(a) do 9º ano, já pensou em estudar na escola com o <b>maior IDEB da 13ª Gerência de Ensino</b> da Paraíba? Bora conhecer!</p>
+    <button class="cta" data-confetti>Quero conhecer 🚀</button>
+  </section>
+
+  <section class="ideb rv">
+    <small>Maior IDEB da 13ª Gerência Regional de Ensino</small>
+    <div class="num" data-count="${SCHOOL.ideb}">0,0</div>
+    <strong>Nossa escola é referência na região! 🏆</strong>
+    <div style="opacity:.85;margin-top:6px">IDEB ${SCHOOL.idebAno}</div>
+  </section>
+
+  <h2 class="title rv">Por que estudar aqui? ✨</h2>
+  <div class="grid">${feats}</div>
+
+  <section class="tech rv">
+    <h2>💻 Curso Técnico em Informática</h2>
+    <p style="margin:0;color:var(--muted)">Ao terminar o ensino médio, você já tem o <b>curso técnico em Informática no currículo</b>. Um passo à frente para o mercado de trabalho e para a faculdade!</p>
+    <div class="code"><i>const</i> voce = <i>new</i> Estudante();<br>voce.ingressar(<i>"Francisco de Sá Cavalcante"</i>);<br>voce.sair(<i>"Ensino Médio + Técnico em Informática"</i>); // 🎉</div>
+  </section>`;
+}
+
+/* ---------- Olimpíadas ---------- */
+function renderOlimpiadas(){
+  const count = t => PREMIACOES.filter(p=>p.tipo===t).length;
+  const pills = Object.keys(MEDAL_STYLE).map(t=>
+    `<div class="pill" data-confetti><span>${MEDAL_STYLE[t][0]}</span>${count(t)}</div>`).join("");
+  const cards = PREMIACOES.map(p=>{
+    const [emoji,color] = MEDAL_STYLE[p.tipo];
+    return `<div class="card medal rv" style="--accent:${color};--m:${color}">
+      <div class="disc">${emoji}</div><h3>${p.titulo}</h3>
+      <p><b>${p.evento}</b> · ${p.ano}</p><p>${p.aluno}</p></div>`;
+  }).join("");
+  return `
+  <section class="hero">
+    <span class="tag">🏅 Orgulho da escola</span>
+    <h1>Nossos alunos <span class="grad">brilham!</span></h1>
+    <p>Medalhas, menções e conquistas em olimpíadas. Quem sabe a próxima não é a sua?</p>
+  </section>
+  <div class="medals-total">${pills}</div>
+  <div class="grid">${cards}</div>
+  <p class="note">Edite a lista PREMIACOES no código para incluir as conquistas reais da escola.</p>`;
+}
+
+const $ = s => document.querySelector(s);
+
+function buildBrand(){
+  $("#brand").innerHTML = `<img class="logo" src="${SCHOOL.logo}" alt="Logo da escola" id="logoImg">`;
+  const handleFallback = e => { e.target.outerHTML = '<div class="logo-fallback">🏫</div>'; };
+  $("#logoImg").onerror = handleFallback;
+}
+
+function buildNav(){
+  $("#nav").innerHTML = SECTIONS.map(s=>`<button data-go="${s.id}">${s.label}</button>`).join("");
+  $("#main").innerHTML = SECTIONS.map(s=>`<div class="page" id="p-${s.id}">${s.render()}</div>`).join("");
+}
+
+function show(id){
+  if(!SECTIONS.some(s=>s.id===id)) id = SECTIONS[0].id;
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("show", p.id==="p-"+id));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active", b.dataset.go===id));
+  try{ history.replaceState(null,"","#"+id); }catch(e){}
+  window.scrollTo({top:0,behavior:"smooth"});
+  activate($("#p-"+id));
+}
+
+function activate(page){
+  const io = new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); if(e.target.querySelector("[data-count]")||e.target.dataset.count) countUp(e.target.querySelector("[data-count]")||e.target); }
+  }),{threshold:.2});
+  page.querySelectorAll(".rv").forEach(el=>{ el.classList.remove("in"); io.observe(el); });
+
+  const heroLogo = page.querySelector("#heroLogoImg");
+  if(heroLogo) heroLogo.onerror = e => { e.target.outerHTML = '<div class="hero-logo logo-fallback" style="font-size:3rem">🏫</div>'; };
+}
+
+function countUp(el){
+  if(!el || el.dataset.done) return; el.dataset.done=1;
+  const end = parseFloat(el.dataset.count), t0 = performance.now();
+  (function tick(t){
+    const k = Math.min((t-t0)/1800,1), v = end*(1-Math.pow(1-k,3));
+    el.textContent = v.toFixed(1).replace(".",",");
+    if(k<1) requestAnimationFrame(tick); else burst(innerWidth/2, innerHeight/3);
+  })(t0);
+}
+
+const cv = $("#fx"), cx = cv.getContext("2d"); let parts = [];
+function size(){ cv.width = innerWidth; cv.height = innerHeight; } size(); addEventListener("resize", size);
+function burst(x,y){
+  const cols = ["#ff4d6d","#ffb703","#06d6a0","#3a86ff","#8338ec"];
+  for(let i=0;i<90;i++) parts.push({x,y,vx:(Math.random()-.5)*14,vy:Math.random()*-13-2,s:Math.random()*8+4,c:cols[i%5],r:Math.random()*6,life:110});
+  if(parts.length===90) loop();
+}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts = parts.filter(p=>p.life>0);
+  parts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=.45; p.r+=.2; p.life--; cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c; cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); cx.restore(); });
+  if(parts.length) requestAnimationFrame(loop); else cx.clearRect(0,0,cv.width,cv.height);
+}
+
+document.addEventListener("click", e=>{
+  const go = e.target.closest("[data-go]"); if(go) show(go.dataset.go);
+  const cf = e.target.closest("[data-confetti]"); if(cf){ burst(e.clientX,e.clientY); }
+});
+addEventListener("hashchange", ()=>show(location.hash.slice(1)));
+
+buildBrand(); buildNav(); show(location.hash.slice(1));
+</script>
+
+<script>
+/* =========================================================
+   🦉 CORUJA SÁBIA — voa pela página e interage com a interface
+   ========================================================= */
+(()=>{
+  const W=64, H=72;
+  const owl=document.createElement("div"); owl.id="owl";
+  owl.innerHTML=`<div class="bub"></div><div class="in"><svg viewBox="0 0 64 72" aria-hidden="true">
+    <ellipse class="wl" cx="12" cy="42" rx="9" ry="19" fill="#6b4226" transform="rotate(8 12 42)"/>
+    <ellipse class="wr" cx="52" cy="42" rx="9" ry="19" fill="#6b4226" transform="rotate(-8 52 42)"/>
+    <path d="M14 22 L12 6 L26 16Z M50 22 L52 6 L38 16Z" fill="#8a5a33"/>
+    <ellipse cx="32" cy="44" rx="21" ry="24" fill="#8a5a33"/>
+    <ellipse cx="32" cy="52" rx="13" ry="16" fill="#f3dfbf"/>
+    <path d="M24 46q3 3 6 0M34 46q3 3 6 0M26 56q3 3 6 0M34 56q3 3 6 0M30 65q2 2 4 0" stroke="#c99a62" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <circle cx="23" cy="30" r="11" fill="#fff8ef" stroke="#5a3a20" stroke-width="2"/>
+    <circle cx="41" cy="30" r="11" fill="#fff8ef" stroke="#5a3a20" stroke-width="2"/>
+    <circle class="pp" cx="23" cy="30" r="5" fill="#1d1b3a"/>
+    <circle class="pp" cx="41" cy="30" r="5" fill="#1d1b3a"/>
+    <circle cx="21" cy="28" r="1.6" fill="#fff"/><circle cx="39" cy="28" r="1.6" fill="#fff"/>
+    <ellipse class="lid" cx="23" cy="30" rx="11" ry="11" fill="#8a5a33"/>
+    <ellipse class="lid" cx="41" cy="30" rx="11" ry="11" fill="#8a5a33"/>
+    <path d="M28 38 L36 38 L32 46Z" fill="#ffb703" stroke="#d98e00" stroke-width="1"/>
+    <path d="M24 70h5M35 70h5" stroke="#ffb703" stroke-width="3" stroke-linecap="round"/>
+    <path d="M10 14 L32 6 L54 14 L32 22Z" fill="#1d1b3a"/>
+    <path d="M22 17v6q10 5 20 0v-6" fill="#2d2a58"/>
+    <path d="M52 14v12" stroke="#ffb703" stroke-width="2"/><circle cx="52" cy="28" r="2.4" fill="#ffb703"/>
+  </svg></div>`;
+  document.body.appendChild(owl);
+  const bub=owl.querySelector(".bub"), pupils=owl.querySelectorAll(".pp");
+  let ox=innerWidth-W-16, oy=innerHeight-H-16, mx=innerWidth/2, my=innerHeight/2;
+  let current=null, flyT, bubT, lastHover=0, lastMove=0;
+
+  const SAY=[
+    [".cta","Clique! Todo conhecimento começa com um passo 🚀"],
+    [".ideb","IDEB 5,4: quem estuda colhe resultado! 📚"],
+    [".pill","Cada medalha é fruto de dedicação 🏅"],
+    [".medal","Parabéns, campeões! 🎖️"],
+    [".tech","Programar é a nova forma de escrever ✍️💻"],
+    ["nav button","Vamos explorar? 🧭"],
+    [".tag","Sabedoria também se aprende aqui 🦉"],
+    [".title","Quem estuda, voa alto! ✨"],
+    [".card","Hoo-hoo! Boa escolha de leitura 👀"],
+    [".hero-logo,.logo","A nossa escola, com muito orgulho 💜"]
+  ];
+  const TARGETS=SAY.map(s=>s[0]).join(",");
+  const say=(t,ms=2600)=>{ bub.textContent=t; bub.classList.add("on"); clearTimeout(bubT); bubT=setTimeout(()=>bub.classList.remove("on"),ms); };
+  const phrase=el=>{ for(const [sel,t] of SAY) if(el.matches(sel)||el.closest(sel)) return t; return "Hoo-hoo! 🦉"; };
+
+  function moveTo(nx,ny){
+    nx=Math.max(4,Math.min(innerWidth-W-4,nx)); ny=Math.max(4,Math.min(innerHeight-H-4,ny));
+    const far=Math.hypot(nx-ox,ny-oy)>20;
+    ox=nx; oy=ny; owl.style.transform=`translate(${ox}px,${oy}px)`;
+    owl.classList.toggle("low",oy<70);
+    if(far){ owl.classList.add("fly"); clearTimeout(flyT); flyT=setTimeout(()=>owl.classList.remove("fly"),1100); }
+  }
+
+  function perch(el,talk=true){
+    if(!el||!el.getBoundingClientRect) return;
+    const r=el.getBoundingClientRect();
+    let nx=r.left+r.width/2-W/2+(Math.random()-.5)*Math.min(r.width*.5,80);
+    let ny=r.top-H+12;
+    if(ny<8) ny=r.bottom-14;
+    current=el; moveTo(nx,ny);
+    owl.classList.toggle("tilt",Math.random()<.4);
+    if(talk) setTimeout(()=>say(phrase(el)),900);
+  }
+
+  const visible=()=>[...document.querySelectorAll(TARGETS)].filter(el=>{
+    if(!el.offsetParent&&getComputedStyle(el).position!=="fixed") return false;
+    const r=el.getBoundingClientRect();
+    return r.width>20&&r.bottom>60&&r.top<innerHeight-H&&el!==current;
+  });
+
+  function wander(){
+    if(document.hidden||Date.now()-lastHover<3500) return;
+    const v=visible(); if(v.length) perch(v[Math.floor(Math.random()*v.length)]);
+  }
+
+  /* olhos seguem o mouse / toque */
+  const look=(x,y)=>{ mx=x; my=y;
+    const r=owl.getBoundingClientRect(), dx=x-(r.left+W/2), dy=y-(r.top+30), d=Math.hypot(dx,dy)||1, k=Math.min(3.2,d/40);
+    pupils.forEach(p=>p.setAttribute("transform",`translate(${dx/d*k},${dy/d*k})`)); };
+  addEventListener("pointermove",e=>look(e.clientX,e.clientY),{passive:true});
+
+  /* passar o mouse sobre elementos chama a coruja */
+  document.addEventListener("pointerover",e=>{
+    if(e.pointerType==="touch") return;
+    const el=e.target.closest(TARGETS);
+    if(!el||el===current||Date.now()-lastMove<1300) return;
+    lastMove=lastHover=Date.now(); perch(el);
+  });
+
+  /* cliques: comemora e reage a navegação */
+  document.addEventListener("click",e=>{
+    const el=e.target.closest(TARGETS); if(!el) return;
+    lastHover=Date.now();
+    owl.classList.remove("cheer"); void owl.offsetWidth; owl.classList.add("cheer");
+    if(el.closest("[data-go]")){
+      say("Voando para a nova página! 🦉",1500);
+      setTimeout(()=>{ const t=document.querySelector(".page.show .tag"); if(t) perch(t); },900);
+    } else if(el.closest("[data-confetti]")) say("Uhuu! Que festa! 🎉",2000);
+  });
+
+  /* ao parar de rolar, pousa em algo que apareceu */
+  let st; addEventListener("scroll",()=>{ clearTimeout(st); st=setTimeout(()=>{ lastHover=0; wander(); },900); },{passive:true});
+  addEventListener("resize",()=>current&&perch(current,false));
+
+  /* início */
+  moveTo(ox,oy); look(mx,my);
+  setTimeout(()=>{ say("Hoo-hoo! Eu sou a coruja da sabedoria 🦉",3200); },800);
+  setTimeout(()=>{ const t=document.querySelector(".page.show .tag"); if(t) perch(t,false); },4200);
+  setInterval(wander,6500);
+})();
+</script>
+</body>
+</html>
