@@ -6,13 +6,16 @@
 <title>Escola Francisco de Sá Cavalcante · Ensino Médio Integral</title>
 <style>
 :root{
-  --bg:#fff8ef; --card:#ffffff; --ink:#1d1b3a; --muted:#5b5877;
-  --c1:#ff4d6d; --c2:#ffb703; --c3:#3a86ff; --c4:#06d6a0; --c5:#8338ec;
+  --bg:#fff8ef;
+  --card:#ffffff; --ink:#1d1b3a; --muted:#5b5877;
+  --c1:#ff4d6d;
+  --c2:#ffb703; --c3:#3a86ff; --c4:#06d6a0; --c5:#8338ec;
   --shadow:0 10px 30px rgba(29,27,58,.14);
-  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
- :root:not([data-theme="light"]){--bg:#15132b;--card:#221f45;--ink:#fff6e8;--muted:#b9b5d8;--shadow:0 10px 30px rgba(0,0,0,.45)}
+  :root:not([data-theme="light"]){--bg:#15132b;--card:#221f45;--ink:#fff6e8;--muted:#b9b5d8;--shadow:0 10px 30px rgba(0,0,0,.45)}
 }
 :root[data-theme="dark"]{--bg:#15132b;--card:#221f45;--ink:#fff6e8;--muted:#b9b5d8;--shadow:0 10px 30px rgba(0,0,0,.45)}
 html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
@@ -56,7 +59,7 @@ main{position:relative;z-index:1;max-width:1050px;margin:0 auto;padding:20px 18p
 .grad{background:linear-gradient(90deg,var(--c1),var(--c2),var(--c4),var(--c3),var(--c5),var(--c1));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
 @keyframes shine{to{background-position:300% 0}}
 .hero p{max-width:620px;margin:0 auto 18px;color:var(--muted);font-size:1.1rem}
-.cta{border:0;cursor:pointer;font:inherit;font-weight:800;font-size:1.05rem;color:#fff;padding:14px 28px;border-radius:999px;background:linear-gradient(135deg,var(--c1),var(--c5));box-shadow:0 8px 0 #5a2aa8,var(--shadow);transition:.15s}
+.cta{display:inline-block;text-decoration:none;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:1.05rem;color:#fff;padding:14px 28px;border-radius:999px;background:linear-gradient(135deg,var(--c1),var(--c5));box-shadow:0 8px 0 #5a2aa8,var(--shadow);transition:.15s}
 .cta:active{transform:translateY(6px);box-shadow:0 2px 0 #5a2aa8}
 
 /* IDEB REFINADO E DINÂMICO ✨ */
@@ -146,6 +149,99 @@ main{position:relative;z-index:1;max-width:1050px;margin:0 auto;padding:20px 18p
 .tech{margin-top:34px;padding:26px;border-radius:28px;background:var(--card);box-shadow:var(--shadow);display:grid;gap:14px;border-left:10px solid var(--c4)}
 .code{font-family:Consolas,monospace;background:#1d1b3a;color:#06d6a0;padding:14px 16px;border-radius:14px;overflow-x:auto;font-size:.95rem}
 .code i{color:#ffb703;font-style:normal}
+
+/* destaque quadrilha junina (vídeo rotacionado para horizontal) */
+.quadrilha-box{
+  margin-top:34px;
+  padding:28px 24px;
+  border-radius:28px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+  border-top:8px solid var(--c2);
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+}
+.quadrilha-flags{
+  font-size:1.45rem;
+  letter-spacing:6px;
+  margin-bottom:10px;
+  user-select:none;
+}
+.quadrilha-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  color:#fff;
+  font-weight:800;
+  font-size:.85rem;
+  padding:5px 14px;
+  border-radius:999px;
+  margin-bottom:10px;
+  box-shadow:0 4px 12px rgba(255,77,109,.25);
+}
+.quadrilha-box h2{font-size:clamp(1.4rem,3.5vw,2rem);margin-bottom:8px}
+.quadrilha-box p{color:var(--muted);max-width:640px;margin:0 auto 20px}
+.video-stage{
+  position:relative;
+  width:100%;
+  max-width:680px;
+  aspect-ratio:16 / 9;
+  margin:0 auto;
+  border-radius:22px;
+  overflow:hidden;
+  background:#110f24;
+  border:4px solid var(--c2);
+  box-shadow:0 12px 28px rgba(29,27,58,.25);
+}
+.video-stage iframe{
+  position:absolute;
+  top:50%;
+  left:50%;
+  /* Inverte largura e altura da proporção 16:9 (56.25% e 177.78%) e gira 90° à esquerda */
+  width:56.25%;
+  height:177.78%;
+  border:0;
+  transform:translate(-50%,-50%) rotate(-90deg);
+}
+
+/* seção ENEM */
+.enem-box{
+  margin:24px 0 32px;
+  padding:32px 26px;
+  border-radius:30px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+  border-left:10px solid var(--c3);
+  display:grid;
+  gap:16px;
+}
+.enem-box p{margin:0;color:var(--muted);font-size:1.05rem;line-height:1.6}
+.enem-highlight{
+  padding:22px;
+  border-radius:22px;
+  background:linear-gradient(135deg, color-mix(in srgb, var(--c3) 14%, var(--card)), color-mix(in srgb, var(--c5) 14%, var(--card)));
+  border:2px dashed var(--c3);
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:14px;
+}
+.enem-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+  font-weight:800;
+  font-size:1.05rem;
+  color:#fff;
+  padding:14px 26px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--c3),var(--c5));
+  box-shadow:0 7px 0 #3a1c71,var(--shadow);
+  transition:.15s;
+}
+.enem-btn:hover{transform:translateY(-2px)}
+.enem-btn:active{transform:translateY(5px);box-shadow:0 2px 0 #3a1c71}
 
 /* olimpíadas */
 .medals-banner-wrapper{text-align:center;margin:16px 0 28px}
@@ -257,6 +353,8 @@ const SCHOOL = {
   cidade: "Paulista – PB, Sertão Paraibano",
   logo: "https://drive.google.com/thumbnail?id=1mA0XZVAMqOxIIYAz_0VfvPRLFlvwOYK-&sz=w300",
   bannerMedalhas: "https://drive.google.com/thumbnail?id=1TGe6lS4suIEqhzmS78d2Isqo4ptvflwb&sz=w800",
+  videoQuadrilha: "https://drive.google.com/file/d/1BV502CMNq2k_VOYU_eSP3UdLCkOd0WM9/preview",
+  linkSimuladosEnem: "https://ecitpb.github.io/simulados/",
   ideb: 5.4,
   idebAno: "2023"
 };
@@ -291,7 +389,8 @@ const MEDAL_STYLE = {
 
 const SECTIONS = [
   { id:"inicio", label:"🏠 Início", render: renderInicio },
-  { id:"olimpiadas", label:"🏅 Olimpíadas", render: renderOlimpiadas }
+  { id:"olimpiadas", label:"🏅 Olimpíadas", render: renderOlimpiadas },
+  { id:"enem", label:"🎓 ENEM", render: renderEnem }
 ];
 
 /* ---------- Início ---------- */
@@ -328,6 +427,21 @@ function renderInicio(){
     <h2>💻 Curso Técnico em Informática</h2>
     <p style="margin:0;color:var(--muted)">Ao terminar o ensino médio, você já tem o <b>curso técnico em Informática no currículo</b>. Um passo à frente para o mercado de trabalho e para a faculdade!</p>
     <div class="code"><i>const</i> voce = <i>new</i> Estudante();<br>voce.ingressar(<i>"Francisco de Sá Cavalcante"</i>);<br>voce.sair(<i>"Ensino Médio + Técnico em Informática"</i>); // 🎉</div>
+  </section>
+
+  <section class="quadrilha-box rv">
+    <div class="quadrilha-flags" aria-hidden="true">🏮🎉🌽🔥🎶🎊🏮</div>
+    <span class="quadrilha-badge">🔥 Cultura, Arte e Alegria</span>
+    <h2>💃🕺 Nossa Última Quadrilha Junina</h2>
+    <p>Aqui também tem muita tradição, cultura e energia boa! Dá o play e confere um pouquinho da animação da nossa última quadrilha escolar:</p>
+    <div class="video-stage">
+      <iframe
+        src="${SCHOOL.videoQuadrilha}"
+        title="Vídeo da última quadrilha da Escola Francisco de Sá Cavalcante"
+        allow="autoplay; fullscreen"
+        allowfullscreen>
+      </iframe>
+    </div>
   </section>`;
 }
 
@@ -364,6 +478,36 @@ function renderOlimpiadas(){
   <div class="medals-total rv">${pills}</div>
   <div class="grid">${cards}</div>
   <p class="note">Quadro oficial de medalhas conquistadas em 2026! 🏆</p>`;
+}
+
+/* ---------- ENEM ---------- */
+function renderEnem(){
+  const pilares = [
+    ["🎯","Foco nos Melhores Resultados","Acompanhamento pedagógico dedicado, aulões estratégicos e revisão completa das áreas do conhecimento.","--c3"],
+    ["✍️","Redação","Treinos semanais, análise detalhada das competências e orientação personalizada para você mandar bem.","--c1"],
+    ["💻","Plataforma Exclusiva","Ambiente digital próprio para você praticar no seu ritmo, acompanhar seu desempenho e evoluir sempre.","--c4"]
+  ].map(([i,t,d,c])=>`<div class="card rv" style="--accent:var(${c})"><span class="ico">${i}</span><h3>${t}</h3><p>${d}</p></div>`).join("");
+
+  return `
+  <section class="hero">
+    <span class="tag">🎓 Rumo à Universidade</span>
+    <h1>A melhor preparação para o <span class="grad">ENEM!</span></h1>
+    <p>Aqui você conta com uma equipe comprometida em impulsionar o seu potencial e conquistar as melhores notas.</p>
+  </section>
+
+
+<section class="enem-box rv">
+    <h2>🚀 Preparação para o ENEM + Simulados Gratuitos</h2>
+    <p>A <b>Escola Francisco de Sá Cavalcante</b> busca oferecer uma preparação de qualidade para o ENEM, incentivando nossos estudantes a desenvolverem seus conhecimentos e conquistarem oportunidades de ingresso no ensino superior.</p>
+    <p>Além das aulas em tempo integral, aulões e do acompanhamento dos professores, contamos também com uma <b>plataforma gratuita de simulados do ENEM</b>, que permite aos estudantes praticar, testar seus conhecimentos e se preparar cada vez melhor para o exame!</p>
+    <div class="enem-highlight">
+      <strong>📝 Acesse nossa Plataforma de Simulados do ENEM:</strong>
+      <a class="enem-btn" href="${SCHOOL.linkSimuladosEnem}" target="_blank" rel="noopener noreferrer" data-confetti>Acessar Simulados ENEM 🎓🚀</a>
+    </div>
+  </section>
+
+
+  <div class="grid">${pilares}</div>`;
 }
 
 const $ = s => document.querySelector(s);
@@ -469,6 +613,9 @@ buildBrand(); buildNav(); show(location.hash.slice(1));
 
   const SAY=[
     [".cta","Clique! Todo conhecimento começa com um passo 🚀"],
+    [".enem-btn","Bora treinar nos simulados gratuitos do ENEM! 🎓"],
+    [".enem-box","Preparação nota 1000 para o ENEM! 📚✨"],
+    [".quadrilha-box","Anarriê! Olha a animação da nossa quadrilha! 🔥🎶"],
     [".ideb","IDEB 5,4: quem estuda colhe resultado! 📚"],
     [".pill","Cada medalha é fruto de dedicação 🏅"],
     [".medal","Parabéns, campeões de 2026! 🎖️"],
